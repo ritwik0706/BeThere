@@ -53,7 +53,7 @@ class InstituteInfo : AppCompatActivity() {
                 })
 
         buEditInstiInfo.setOnClickListener {
-            var addinfo=Intent(this,AddInstituteInfo::class.java)
+            val addinfo=Intent(this,AddInstituteInfo::class.java)
             startActivity(addinfo)
             finish()
         }
