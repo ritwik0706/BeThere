@@ -24,7 +24,8 @@
         <activity android:name=".StudentActivity" />
         <activity android:name=".AddProfDetails" />
         <activity android:name=".AddInstituteInfo" />
-        <activity android:name=".InstituteInfo"></activity>
+        <activity android:name=".InstituteInfo" />
+        <activity android:name=".ProfInfo"></activity>
     </application>
 
 </manifest>

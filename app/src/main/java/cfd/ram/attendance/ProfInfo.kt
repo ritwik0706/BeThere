@@ -1,20 +1,21 @@
 package cfd.ram.attendance
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_add_prof_details.*
+import kotlinx.android.synthetic.main.activity_institute_info2.*
+import kotlinx.android.synthetic.main.activity_prof_info.*
 import kotlinx.android.synthetic.main.activity_professor.*
 
-class ProfessorActivity : AppCompatActivity() {
+class ProfInfo : AppCompatActivity() {
 
-    var mAuth:FirebaseAuth?=null
+    var mAuth: FirebaseAuth?=null
 
     var profName:String?=null
     var profEmail:String?=null
@@ -22,42 +23,21 @@ class ProfessorActivity : AppCompatActivity() {
     var profInstitute:String?=null
     var profImage:String?=null
 
-    var database=FirebaseDatabase.getInstance()
+    var database= FirebaseDatabase.getInstance()
     var myRef=database.reference
-
-    private var adapter:ProfCourseAdapter?=null
-    private var profCourseList=ArrayList<ProfCourses>()
-    private var layoutManager: RecyclerView.LayoutManager?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mAuth=FirebaseAuth.getInstance()
-        setContentView(R.layout.activity_professor)
-
-        adapter= ProfCourseAdapter(profCourseList,this)
-        layoutManager= LinearLayoutManager(this)
-
-        rvProfCourses.layoutManager=layoutManager
-        rvProfCourses.adapter=adapter
+        mAuth= FirebaseAuth.getInstance()
+        setContentView(R.layout.activity_prof_info)
 
         LoadProfInfo()
-
-        prof_info.setOnClickListener {
-            var intent= Intent(this,ProfInfo::class.java)
-            startActivity(intent)
-        }
-
-        for (i in 1..9){
-            var c=ProfCourses("Course$i","Course$i Code")
-            profCourseList.add(c)
-        }
-        adapter!!.notifyDataSetChanged()
     }
 
     fun LoadProfInfo(){
 
         myRef.child("Institute").child("Institute").child("Professor Info")
-                .addValueEventListener(object :ValueEventListener{
+                .addValueEventListener(object : ValueEventListener {
                     override fun onCancelled(p0: DatabaseError?) {
 
                     }
@@ -78,8 +58,11 @@ class ProfessorActivity : AppCompatActivity() {
                                 profRank=profDetails["rank"] as String
 
                                 if (profEmail==mAuth!!.currentUser!!.email){
-                                    tvProf.text=profName
-
+                                    tvProfName.text=profName
+                                    tvProfInstitute.text=profInstitute
+                                    tvProfEmail.text=profEmail
+                                    tvProfRank.text=profRank
+                                    Picasso.with(this@ProfInfo).load(profImage).into(ivProfInfo)
                                 }
 
                             }
