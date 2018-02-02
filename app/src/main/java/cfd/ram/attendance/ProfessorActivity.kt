@@ -68,6 +68,7 @@ class ProfessorActivity : AppCompatActivity() {
                             }
                         }
 
+                        tvProf.text=profName
 
                     }
 
