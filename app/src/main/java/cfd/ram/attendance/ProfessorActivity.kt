@@ -10,6 +10,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_institute.*
+import kotlinx.android.synthetic.main.activity_prof_info.*
 import kotlinx.android.synthetic.main.activity_professor.*
 
 class ProfessorActivity : AppCompatActivity() {
@@ -42,16 +45,49 @@ class ProfessorActivity : AppCompatActivity() {
 
         LoadProfInfo()
 
+        fab_add_prof_course.setOnClickListener {
+            var profCourseInfo=Intent(this,AddCourseDetails::class.java)
+            startActivity(profCourseInfo)
+        }
+
         prof_info.setOnClickListener {
             var intent= Intent(this,ProfInfo::class.java)
             startActivity(intent)
         }
+    }
 
-        for (i in 1..9){
-            var c=ProfCourses("Course$i","Course$i Code")
-            profCourseList.add(c)
-        }
-        adapter!!.notifyDataSetChanged()
+    fun LoadCourses(){
+
+            myRef.child("Institute").child("Professor").child(profInstitute).child(profName)
+                    .addValueEventListener(object :ValueEventListener{
+                        override fun onCancelled(p0: DatabaseError?) {
+                        }
+
+                        override fun onDataChange(p0: DataSnapshot?) {
+
+                            try {
+                                if (p0!!.value!=null){
+
+                                    profCourseList.clear()
+
+                                    var td=p0!!.value as HashMap<String,Any>
+
+                                    for (key in td.keys){
+                                        var course=td[key] as HashMap<String,Any>
+
+                                        var courseCode=course["courseCode"] as String
+                                        var courseName=course["courseName"] as String
+
+                                        profCourseList.add(ProfCourses(courseName,courseCode))
+                                    }
+                                    adapter!!.notifyDataSetChanged()
+                                }
+                            }catch (ex:Exception){}
+                        }
+
+                    })
+
+
     }
 
     fun LoadProfInfo(){
@@ -71,20 +107,25 @@ class ProfessorActivity : AppCompatActivity() {
                             for (i in prof.keys){
                                 var profDetails=prof[i] as HashMap<String,Any>
 
-                                profName=profDetails["name"] as String
+                                var name=profDetails["name"] as String
                                 profEmail=profDetails["email"] as String
                                 profImage=profDetails["imageURL"] as String
                                 profInstitute=profDetails["instituteName"] as String
                                 profRank=profDetails["rank"] as String
 
                                 if (profEmail==mAuth!!.currentUser!!.email){
-                                    tvProf.text=profName
+                                    profName=name
+                                    tvProf.text=name
+                                    if (profImage!=""){
+                                        Picasso.with(this@ProfessorActivity).load(profImage).into(prof_info)
+                                    }
+
 
                                 }
 
                             }
                         }
-
+                        LoadCourses()
                     }
 
                 })

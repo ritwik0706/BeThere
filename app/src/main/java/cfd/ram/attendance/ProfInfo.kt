@@ -62,7 +62,9 @@ class ProfInfo : AppCompatActivity() {
                                     tvProfInstitute.text=profInstitute
                                     tvProfEmail.text=profEmail
                                     tvProfRank.text=profRank
-                                    Picasso.with(this@ProfInfo).load(profImage).into(ivProfInfo)
+                                    if (profImage!=""){
+                                        Picasso.with(this@ProfInfo).load(profImage).into(ivProfInfo)
+                                    }
                                 }
 
                             }

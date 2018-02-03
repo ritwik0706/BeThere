@@ -12,22 +12,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_weight="0"
+        android:orientation="horizontal"
         android:padding="5pt">
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Courses"
             android:textColor="@color/Aqua"
             android:textSize="30sp" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="6" />
+
+        <ImageView
+            android:id="@+id/ivStudentInfo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/student" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical"
         tools:layout_editor_absoluteY="64dp">
 
@@ -36,5 +50,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_to_add_student_courses"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="23dp"
+        android:layout_marginEnd="14dp"
+        android:layout_weight="0"
+        android:src="@drawable/ic_add_black_24dp"
+        app:elevation="10dp" />
 
 </LinearLayout>

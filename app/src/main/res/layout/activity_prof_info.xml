@@ -9,12 +9,14 @@
     tools:context="cfd.ram.attendance.ProfInfo">
 
     <ImageView
+        android:layout_marginTop="10pt"
         android:id="@+id/ivProfInfo"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:srcCompat="@drawable/add_image" />
 
     <TextView
+        android:layout_marginTop="3pt"
         android:id="@+id/tvProfName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,13 +103,5 @@
             android:textColor="@color/Chartreuse"
             android:textSize="18sp" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buEditInstiInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15pt"
-        android:text="EDIT" />
 
 </LinearLayout>

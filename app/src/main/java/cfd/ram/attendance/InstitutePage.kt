@@ -99,37 +99,40 @@ class InstitutePage : AppCompatActivity() {
 
     fun LoadProfessor(){
 
-        myRef.child("Institute").child("Institute").child("Professor Info").child(instituteName)
-                .addValueEventListener(object: ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError?) {
+        if (instituteName!=null){
+            myRef.child("Institute").child("Institute").child("Professor Info").child(instituteName)
+                    .addValueEventListener(object: ValueEventListener{
+                        override fun onCancelled(p0: DatabaseError?) {
 
-                    }
+                        }
 
-                    override fun onDataChange(p0: DataSnapshot?) {
+                        override fun onDataChange(p0: DataSnapshot?) {
 
-                        try {
+                            try {
 
-                            profList.clear()
+                                profList.clear()
 
-                            var td= p0!!.value as HashMap<String,Any>
+                                var td= p0!!.value as HashMap<String,Any>
 
-                            for (key in td.keys){
-                                var prof=td[key] as HashMap<String,Any>
-
-
-                                profList.add(Professor(prof["name"] as String,
-                                        prof["email"] as String))
-
-                                adapter!!.notifyDataSetChanged()
-
-                            }
-                        }catch (ex:Exception){ }
+                                for (key in td.keys){
+                                    var prof=td[key] as HashMap<String,Any>
 
 
+                                    profList.add(Professor(prof["name"] as String,
+                                            prof["email"] as String))
+
+                                    adapter!!.notifyDataSetChanged()
+
+                                }
+                            }catch (ex:Exception){ }
 
 
-                    }
 
-                })
+
+                        }
+
+                    })
+        }
+
     }
 }

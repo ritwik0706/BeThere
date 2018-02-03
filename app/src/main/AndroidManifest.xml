@@ -12,13 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CategorySelectionActivity"/>
-
+        <activity android:name=".CategorySelectionActivity" />
         <activity
             android:name=".SplashScreen"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            >
-
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +28,9 @@
         <activity android:name=".AddProfDetails" />
         <activity android:name=".AddInstituteInfo" />
         <activity android:name=".InstituteInfo" />
-        <activity android:name=".ProfInfo"></activity>
+        <activity android:name=".ProfInfo" />
+        <activity android:name=".AddCourseDetails" />
+        <activity android:name=".AddStudentDetails"></activity>
     </application>
 
 </manifest>
