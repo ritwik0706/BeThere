@@ -1,5 +1,6 @@
 package cfd.ram.attendance
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -68,6 +69,14 @@ class AddCourseDetails : AppCompatActivity() {
 
             finish()
 
+        }
+
+        buAddCoureLocation.setOnClickListener{
+            var intent = Intent(this, CurrentLocation::class.java)
+            intent.putExtra("Institute",profInstitute)
+            intent.putExtra("Prof",profName)
+            intent.putExtra("CourseCode",cd_code.text.toString())
+            startActivity(intent)
         }
     }
 
