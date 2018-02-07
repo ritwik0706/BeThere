@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -35,6 +36,9 @@ class ProfessorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuth=FirebaseAuth.getInstance()
+        if (!isUserLogin()){
+            LogOut()
+        }
         setContentView(R.layout.activity_professor)
 
         adapter= ProfCourseAdapter(profCourseList,this)
@@ -53,6 +57,10 @@ class ProfessorActivity : AppCompatActivity() {
         prof_info.setOnClickListener {
             var intent= Intent(this,ProfInfo::class.java)
             startActivity(intent)
+        }
+
+        ivProfLogout.setOnClickListener {
+            LogOut()
         }
     }
 
@@ -99,33 +107,61 @@ class ProfessorActivity : AppCompatActivity() {
                     }
 
                     override fun onDataChange(p0: DataSnapshot?) {
-                        var td=p0!!.value as HashMap<String,Any>
 
-                        for (key in td.keys){
-                            var prof=td[key] as HashMap<String,Any>
+                        if (p0!!.value!=null){
+                            var td=p0!!.value as HashMap<String,Any>
 
-                            for (i in prof.keys){
-                                var profDetails=prof[i] as HashMap<String,Any>
+                            for (key in td.keys){
+                                var prof=td[key] as HashMap<String,Any>
 
-                                var name=profDetails["name"] as String
-                                profEmail=profDetails["email"] as String
-                                profImage=profDetails["imageURL"] as String
-                                profInstitute=profDetails["instituteName"] as String
-                                profRank=profDetails["rank"] as String
+                                for (i in prof.keys){
+                                    var profDetails=prof[i] as HashMap<String,Any>
 
-                                if (profEmail==mAuth!!.currentUser!!.email){
-                                    profName=name
-                                    tvProf.text=name
-                                    if (profImage!=""){
-                                        Picasso.with(this@ProfessorActivity).load(profImage).into(prof_info)
+                                    var name=profDetails["name"] as String
+                                    profEmail=profDetails["email"] as String
+                                    profImage=profDetails["imageURL"] as String
+                                    profInstitute=profDetails["instituteName"] as String
+                                    profRank=profDetails["rank"] as String
+
+                                    if (profEmail==mAuth!!.currentUser!!.email){
+                                        profName=name
+                                        tvProf.text=name
+                                        if (profImage!=""){
+                                            Picasso.with(this@ProfessorActivity).load(profImage).into(prof_info)
+                                        }
                                     }
-                                }
 
+                                }
                             }
+                            LoadCourses()
                         }
-                        LoadCourses()
                     }
 
                 })
+    }
+
+    fun isUserLogin():Boolean{
+        if (mAuth!!.currentUser!=null){
+            return true
+        }
+        return false
+    }
+
+    fun SignOut(){
+        var signout= Intent(this,CategorySelectionActivity::class.java)
+        startActivity(signout)
+        finish()
+    }
+
+    fun LogOut(){
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener{task ->
+                    if (task.isSuccessful){
+
+                        SignOut()
+
+                    }
+                }
     }
 }

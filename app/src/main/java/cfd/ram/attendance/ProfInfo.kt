@@ -43,34 +43,38 @@ class ProfInfo : AppCompatActivity() {
                     }
 
                     override fun onDataChange(p0: DataSnapshot?) {
-                        var td=p0!!.value as HashMap<String,Any>
 
-                        for (key in td.keys){
-                            var prof=td[key] as HashMap<String,Any>
+                        if (p0!!.value!= null){
+                            var td=p0!!.value as HashMap<String,Any>
 
-                            for (i in prof.keys){
-                                var profDetails=prof[i] as HashMap<String,Any>
+                            for (key in td.keys){
+                                var prof=td[key] as HashMap<String,Any>
 
-                                profName=profDetails["name"] as String
-                                profEmail=profDetails["email"] as String
-                                profImage=profDetails["imageURL"] as String
-                                profInstitute=profDetails["instituteName"] as String
-                                profRank=profDetails["rank"] as String
+                                for (i in prof.keys){
+                                    var profDetails=prof[i] as HashMap<String,Any>
 
-                                if (profEmail==mAuth!!.currentUser!!.email){
-                                    tvProfName.text=profName
-                                    tvProfInstitute.text=profInstitute
-                                    tvProfEmail.text=profEmail
-                                    tvProfRank.text=profRank
-                                    if (profImage!=""){
-                                        Picasso.with(this@ProfInfo).load(profImage).into(ivProfInfo)
+                                    profName=profDetails["name"] as String
+                                    profEmail=profDetails["email"] as String
+                                    profImage=profDetails["imageURL"] as String
+                                    profInstitute=profDetails["instituteName"] as String
+                                    profRank=profDetails["rank"] as String
+
+                                    if (profEmail==mAuth!!.currentUser!!.email){
+                                        tvProfName.text=profName
+                                        tvProfInstitute.text=profInstitute
+                                        tvProfEmail.text=profEmail
+                                        tvProfRank.text=profRank
+                                        if (profImage!=""){
+                                            Picasso.with(this@ProfInfo).load(profImage).into(ivProfInfo)
+                                        }
                                     }
-                                }
 
+                                }
                             }
+
+                        }
                         }
 
-                    }
 
                 })
     }

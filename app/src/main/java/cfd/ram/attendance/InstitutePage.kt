@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -34,6 +35,9 @@ class InstitutePage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuth= FirebaseAuth.getInstance()
+        if (!isUserLogin()){
+            LogOut()
+        }
         setContentView(R.layout.activity_institute)
 
         adapter= ProfInstiPageAdapter(profList,this)
@@ -61,6 +65,9 @@ class InstitutePage : AppCompatActivity() {
             val profDetails=Intent(this,AddProfDetails::class.java)
             startActivity(profDetails)
         }
+        ivInstituteLogout.setOnClickListener {
+            LogOut()
+        }
     }
 
     fun LoadInsInfo(){
@@ -71,27 +78,30 @@ class InstitutePage : AppCompatActivity() {
                     }
 
                     override fun onDataChange(p0: DataSnapshot?) {
-                        var td=p0!!.value as HashMap<String,Any>
 
-                        for (key in td.keys){
-                            if (key==mAuth!!.currentUser!!.uid){
-                                var ins=td[key] as HashMap<String,Any>
+                        if (p0!!.value!=null){
+                            var td=p0!!.value as HashMap<String,Any>
 
-                                insName.text=ins["name"] as String
-                                imgUrl=ins["imgUrl"] as String
-                                var insName=ins["name"] as String
-                                instituteEmail=ins["email"] as String
-                                instituteContact=ins["contact"] as String
-                                if (imgUrl!="") {
-                                    Picasso.with(this@InstitutePage).load(imgUrl).into(institute_info)
+                            for (key in td.keys){
+                                if (key==mAuth!!.currentUser!!.uid){
+                                    var ins=td[key] as HashMap<String,Any>
+
+                                    insName.text=ins["name"] as String
+                                    imgUrl=ins["imgUrl"] as String
+                                    var insName=ins["name"] as String
+                                    instituteEmail=ins["email"] as String
+                                    instituteContact=ins["contact"] as String
+                                    if (imgUrl!="") {
+                                        Picasso.with(this@InstitutePage).load(imgUrl).into(institute_info)
+                                    }
+
+                                    instituteName=insName
                                 }
 
-                                instituteName=insName
                             }
-
+                            LoadProfessor()
                         }
-                        LoadProfessor()
-                    }
+                        }
 
 
                 })
@@ -134,5 +144,30 @@ class InstitutePage : AppCompatActivity() {
                     })
         }
 
+    }
+
+    fun isUserLogin():Boolean{
+        if (mAuth!!.currentUser!=null){
+            return true
+        }
+        return false
+    }
+
+    fun SignOut(){
+        var signout= Intent(this,CategorySelectionActivity::class.java)
+        startActivity(signout)
+        finish()
+    }
+
+    fun LogOut(){
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener{task ->
+                    if (task.isSuccessful){
+
+                        SignOut()
+
+                    }
+                }
     }
 }

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -33,6 +34,9 @@ class StudentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuth= FirebaseAuth.getInstance()
+        if (!isUserLogin()){
+            LogOut()
+        }
         setContentView(R.layout.activity_student)
 
         adapter= CourseAdapter(courseList,this)
@@ -64,6 +68,10 @@ class StudentActivity : AppCompatActivity() {
             }
 
         }
+
+        ivStudentLogOut.setOnClickListener {
+            LogOut()
+        }
     }
 
     fun LoadStudentDetails(){
@@ -73,29 +81,33 @@ class StudentActivity : AppCompatActivity() {
                     }
 
                     override fun onDataChange(p0: DataSnapshot?) {
-                        var td=p0!!.value as HashMap<String,Any>
 
-                        for (key in td.keys){
+                        if (p0!!.value!=null){
+                            var td=p0!!.value as HashMap<String,Any>
 
-                            var student=td[key] as HashMap<String,Any>
+                            for (key in td.keys){
 
-                            var stEmail=student["email"] as String
+                                var student=td[key] as HashMap<String,Any>
 
-                            if (stEmail==mAuth!!.currentUser!!.email.toString()){
-                                studentName=student["name"] as String
-                                studentImage=student["image"] as String
-                                studentRoll=student["roll"] as String
-                                studentDOB=student["dob"] as String
-                                studentYear=student["year"] as String
+                                var stEmail=student["email"] as String
+
+                                if (stEmail==mAuth!!.currentUser!!.email.toString()){
+                                    studentName=student["name"] as String
+                                    studentImage=student["image"] as String
+                                    studentRoll=student["roll"] as String
+                                    studentDOB=student["dob"] as String
+                                    studentYear=student["year"] as String
+                                }
+
                             }
 
+                            if (studentImage!=""){
+                                Picasso.with(this@StudentActivity).load(studentImage).into(ivStudentInfo)
+                            }
+
+                            LoadCourses()
                         }
 
-                        if (studentImage!=""){
-                            Picasso.with(this@StudentActivity).load(studentImage).into(ivStudentInfo)
-                        }
-
-                        LoadCourses()
                     }
 
                 })
@@ -126,5 +138,30 @@ class StudentActivity : AppCompatActivity() {
 
                     })
         }
+    }
+
+    fun isUserLogin():Boolean{
+        if (mAuth!!.currentUser!=null){
+            return true
+        }
+        return false
+    }
+
+    fun SignOut(){
+        var signout= Intent(this,CategorySelectionActivity::class.java)
+        startActivity(signout)
+        finish()
+    }
+
+    fun LogOut(){
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener{task ->
+                    if (task.isSuccessful){
+
+                        SignOut()
+
+                    }
+                }
     }
 }

@@ -245,9 +245,10 @@ class AddStudentCourses : AppCompatActivity() {
                     }
 
                     override fun onDataChange(p0: DataSnapshot?) {
-                        var td=p0!!.value as HashMap<String,Any>
+                        if (p0!!.value!=null){
+                            var td=p0!!.value as HashMap<String,Any>
 
-                        for (key in td.keys){
+                            for (key in td.keys){
                                 var student=td[key] as HashMap<String,Any>
 
                                 var stEmail=student["email"] as String
@@ -257,6 +258,7 @@ class AddStudentCourses : AppCompatActivity() {
                                     studentRoll=student["roll"] as String
                                 }
 
+                            }
                         }
                     }
 

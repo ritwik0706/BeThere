@@ -48,23 +48,26 @@ class AddCourseDetails : AppCompatActivity() {
                     }
 
                     override fun onDataChange(p0: DataSnapshot?) {
-                        var td=p0!!.value as HashMap<String,Any>
+                        if (p0!!.value!=null){
+                            var td=p0!!.value as HashMap<String,Any>
 
-                        for (key in td.keys){
-                            var prof=td[key] as HashMap<String,Any>
+                            for (key in td.keys){
+                                var prof=td[key] as HashMap<String,Any>
 
-                            for (i in prof.keys){
-                                var profDetails=prof[i] as HashMap<String,Any>
+                                for (i in prof.keys){
+                                    var profDetails=prof[i] as HashMap<String,Any>
 
-                                var email=profDetails["email"] as String
+                                    var email=profDetails["email"] as String
 
-                                if (email==mAuth!!.currentUser!!.email){
-                                    profName=profDetails["name"] as String
-                                    profInstitute=profDetails["instituteName"] as String
+                                    if (email==mAuth!!.currentUser!!.email){
+                                        profName=profDetails["name"] as String
+                                        profInstitute=profDetails["instituteName"] as String
+                                    }
+
                                 }
-
                             }
                         }
+
 
                     }
 
