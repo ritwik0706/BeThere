@@ -43,6 +43,8 @@ class AddStudentCourses : AppCompatActivity() {
     var friEnd:String?=null
     var satStart:String?=null
     var satEnd:String?=null
+    var longi:String?=null
+    var lat:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,7 @@ class AddStudentCourses : AppCompatActivity() {
 
         buAddStudentCourse.setOnClickListener {
             myRef.child("Institute").child("Student").child("Student Courses").child(studentRoll!!).child(courseCode!!).setValue(PostStudentCourseToFirebase(instituteName!!,profName!!,courseCode!!,mAuth!!.currentUser!!.email.toString(),courseName!!,
-                    monStart!!,monEnd!!,tuStart!!,tuEnd!!,wedStart!!,wedEnd!!,thursStart!!,thursEnd!!,friStart!!,friEnd!!,satStart!!,satEnd!!))
+                    monStart!!,monEnd!!,tuStart!!,tuEnd!!,wedStart!!,wedEnd!!,thursStart!!,thursEnd!!,friStart!!,friEnd!!,satStart!!,satEnd!!,longi!!,lat!!,"0"))
 
             finish()
         }
@@ -220,6 +222,8 @@ class AddStudentCourses : AppCompatActivity() {
                                                 friEnd=course["friEnd"] as String
                                                 satStart=course["satStart"] as String
                                                 satEnd=course["satEnd"] as String
+                                                longi=course["longitude"] as String
+                                                lat=course["latitude"] as String
                                             }
                                         }
 

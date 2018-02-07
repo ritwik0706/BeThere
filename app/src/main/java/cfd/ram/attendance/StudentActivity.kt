@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_student.*
 
 class StudentActivity : AppCompatActivity() {
@@ -24,11 +25,10 @@ class StudentActivity : AppCompatActivity() {
     private var layoutManager:RecyclerView.LayoutManager?=null
 
     var studentName:String?=null
-    var studentInstitute:String?=null
-    var studentProfName:String?=null
     var studentImage:String?=null
-    var courseCode:String?=null
     var studentRoll:String?=null
+    var studentDOB:String?=null
+    var studentYear:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class StudentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_student)
 
         adapter= CourseAdapter(courseList,this)
-        layoutManager=LinearLayoutManager(this)
+        layoutManager= LinearLayoutManager(this)
 
 
         rvCourses.layoutManager=layoutManager
@@ -44,14 +44,30 @@ class StudentActivity : AppCompatActivity() {
 
         LoadStudentDetails()
 
+        fab_to_add_student_courses.setOnClickListener {
+            var addCourse=Intent(this,AddStudentCourses::class.java)
+            startActivity(addCourse)
+        }
+
         ivStudentInfo.setOnClickListener {
-            var intent=Intent(this,AddStudentDetails::class.java)
-            startActivity(intent)
+            if (studentName=="" && studentRoll==""){
+                var intent=Intent(this,AddStudentDetails::class.java)
+                startActivity(intent)
+            }else{
+                var intent=Intent(this,StudentInfo::class.java)
+                intent.putExtra("Name",studentName)
+                intent.putExtra("Image",studentImage)
+                intent.putExtra("Roll",studentRoll)
+                intent.putExtra("DOB",studentDOB)
+                intent.putExtra("Year",studentYear)
+
+            }
+
         }
     }
 
     fun LoadStudentDetails(){
-        myRef.child("Institute").child("Student")
+        myRef.child("Institute").child("Student").child("Student Info")
                 .addValueEventListener(object :ValueEventListener{
                     override fun onCancelled(p0: DatabaseError?) {
                     }
@@ -60,22 +76,23 @@ class StudentActivity : AppCompatActivity() {
                         var td=p0!!.value as HashMap<String,Any>
 
                         for (key in td.keys){
-                            var course=td[key] as HashMap<String,Any>
 
-                            for (i in course.keys){
-                                var student=course[i] as HashMap<String,Any>
+                            var student=td[key] as HashMap<String,Any>
 
-                                var stEmail=student["email"] as String
+                            var stEmail=student["email"] as String
 
-                                if (stEmail==mAuth!!.currentUser!!.email.toString()){
-                                    studentName=student["name"] as String
-                                    studentImage=student["image"] as String
-                                    studentInstitute=student["insName"] as String
-                                    studentProfName=student["profName"] as String
-                                    courseCode=student["courseCode"] as String
-                                    studentRoll=student["roll"] as String
-                                }
+                            if (stEmail==mAuth!!.currentUser!!.email.toString()){
+                                studentName=student["name"] as String
+                                studentImage=student["image"] as String
+                                studentRoll=student["roll"] as String
+                                studentDOB=student["dob"] as String
+                                studentYear=student["year"] as String
                             }
+
+                        }
+
+                        if (studentImage!=""){
+                            Picasso.with(this@StudentActivity).load(studentImage).into(ivStudentInfo)
                         }
 
                         LoadCourses()
@@ -86,20 +103,28 @@ class StudentActivity : AppCompatActivity() {
 
     fun LoadCourses(){
 
-        myRef.child("Institute").child("Professor").child(studentInstitute!!).child(studentProfName!!).child(courseCode!!)
-                .addValueEventListener(object :ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError?) {
+        if (studentRoll!=null || studentRoll!=""){
+            myRef.child("Institute").child("Student").child("Student Courses").child(studentRoll!!)
+                    .addValueEventListener(object :ValueEventListener{
+                        override fun onCancelled(p0: DatabaseError?) {
 
-                    }
+                        }
 
-                    override fun onDataChange(p0: DataSnapshot?) {
-                       var courseDetails=p0!!.value as HashMap<String,Any>
+                        override fun onDataChange(p0: DataSnapshot?) {
+                            var td=p0!!.value as HashMap<String,Any>
 
-                        courseList.add(Course(courseDetails["courseCode"] as String,courseDetails["courseName"] as String))
+                            courseList.clear()
 
-                        adapter!!.notifyDataSetChanged()
-                    }
+                            for (key in td.keys){
+                                var courseDetails=td[key] as HashMap<String,Any>
 
-                })
+                                courseList.add(Course(courseDetails["courseCode"] as String,courseDetails["courseName"] as String))
+                            }
+
+                            adapter!!.notifyDataSetChanged()
+                        }
+
+                    })
+        }
     }
 }

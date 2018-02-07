@@ -1,6 +1,7 @@
 package cfd.ram.attendance
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +27,7 @@ class CourseAdapter(private val courseList:ArrayList<Course>,private val context
         holder!!.BindItem(courseList[position])
     }
 
-    class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
 
         fun BindItem(course:Course){
             var name:TextView=itemView.findViewById(R.id.tvcourseName) as TextView
@@ -34,6 +35,12 @@ class CourseAdapter(private val courseList:ArrayList<Course>,private val context
 
             name.text=course.courseName
             attendance.text=course.attendance
+
+            itemView.setOnClickListener {
+                var intent=Intent(context,MarkAttendance::class.java)
+                intent.putExtra("Code",course.courseName)
+                context.startActivity(intent)
+            }
         }
     }
 

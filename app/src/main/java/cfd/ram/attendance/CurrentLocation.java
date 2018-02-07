@@ -37,7 +37,6 @@ public class CurrentLocation extends AppCompatActivity implements View.OnClickLi
     TextView textView;
     LocationManager locationManager;
     String lattitude,longitude;
-    String instituteName,prof,course;
 
     FirebaseDatabase database=FirebaseDatabase.getInstance();
     DatabaseReference myRef=database.getReference();
@@ -46,12 +45,6 @@ public class CurrentLocation extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_location);
-
-        Bundle b=getIntent().getExtras();
-        instituteName=b.getString("Institute");
-        prof=b.getString("Prof");
-        course=b.getString("CourseCode");
-
 
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
@@ -69,9 +62,15 @@ public class CurrentLocation extends AppCompatActivity implements View.OnClickLi
 
         } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             getLocation();
-            myRef.child("Institute").child("Professor").child(instituteName).child(prof).child(course).setValue(new PostCourseLocation(longitude,lattitude));
+            Toast.makeText(getApplicationContext(),"Gps",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.putExtra("Longi", longitude);
+            intent.putExtra("Lati", lattitude);
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
+
 
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(CurrentLocation.this, Manifest.permission.ACCESS_FINE_LOCATION)

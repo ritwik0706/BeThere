@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="3pt">
+            android:padding="5pt">
 
             <TextView
                 android:id="@+id/tvDetails"
@@ -38,18 +38,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivStudent"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="200dp"
                     android:layout_gravity="start"
                     android:src="@drawable/add_image"
                     app:civ_border_color="#FF000000"
@@ -57,17 +57,18 @@
 
                 <TextView
                     android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This pic will be used \nfor your attendance"
+                    android:text="**This pic will be used for your attendance"
                     android:textColor="@color/DarkBlue" />
             </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_password_code"
                 android:layout_width="match_parent"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="5pt"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/tvStudentName"
@@ -83,8 +84,6 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_password_name"
-            android:layout_marginTop="5pt"
-            android:padding="5pt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -100,82 +99,43 @@
 
         </android.support.design.widget.TextInputLayout>
 
-    </LinearLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_password_name_dob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5pt"
-        android:orientation="horizontal">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tvStudentDOB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:ems="10"
+                android:hint="DOB"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Institute  :"
-            android:textSize="18sp"
-            android:textColor="@color/Black"
-            android:textStyle="bold" />
+        </android.support.design.widget.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/instituteSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_password_name_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tvStudentYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:ems="10"
+                android:hint="Year"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/colorPrimary" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5pt"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Professor  :"
-            android:textColor="@color/Black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/ProfSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5pt"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Courses  :"
-            android:textSize="18sp"
-            android:textColor="@color/Black"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/courseSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0" />
+        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
     <Button
-        android:layout_marginTop="15pt"
         android:id="@+id/buStudentDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

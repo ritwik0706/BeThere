@@ -19,9 +19,12 @@ class PostCourseInfoToFirebase{
     var friEnd:String?=null
     var satStart:String?=null
     var satEnd:String?=null
+    var longitude:String?=null
+    var latitude:String?=null
+    var attendance:String?=null
 
-    constructor(courseName:String,courseCode:String,monStart:String,monEnd:String,tuStart:String,tuEnd:String,wedStart:String,
-                wedEnd:String,thursStart:String,thursEnd:String,friStart:String,friEnd:String,satStart:String,satEnd:String){
+    constructor(courseName:String,courseCode:String,monStart:String,monEnd:String,tuStart:String,tuEnd:String,wedStart:String,wedEnd:String,
+                thursStart:String,thursEnd:String,friStart:String,friEnd:String,satStart:String,satEnd:String,longitude:String,latitude:String,attendance:String){
         this.courseName=courseName
         this.courseCode=courseCode
         this.monStart=monStart
@@ -36,5 +39,8 @@ class PostCourseInfoToFirebase{
         this.friEnd=friEnd
         this.satStart=satStart
         this.satEnd=satEnd
+        this.longitude=longitude
+        this.latitude=latitude
+        this.attendance=attendance
     }
 }

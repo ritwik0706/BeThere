@@ -25,13 +25,14 @@ class ProfInstiPageAdapter(private val profList:ArrayList<Professor>,private val
         holder.BindItem(profList[position])
     }
 
-    class MyViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
         fun BindItem(prof:Professor){
             var name:TextView=itemView.findViewById(R.id.profName) as TextView
             var email:TextView=itemView.findViewById(R.id.profEmailId) as TextView
 
             name.text=prof.profName
             email.text=prof.profEmail
+
         }
     }
 

@@ -119,8 +119,6 @@ class ProfessorActivity : AppCompatActivity() {
                                     if (profImage!=""){
                                         Picasso.with(this@ProfessorActivity).load(profImage).into(prof_info)
                                     }
-
-
                                 }
 
                             }

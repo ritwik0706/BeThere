@@ -19,7 +19,6 @@
             android:value="AIzaSyAbzKVmXNl4aCyYM_PtzyRkq0devaHRYyU" />
 
         <activity android:name=".CategorySelectionActivity" />
-
         <activity
             android:name=".SplashScreen"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
@@ -29,9 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
         <activity android:name=".InstitutePage" />
         <activity android:name=".ProfessorActivity" />
         <activity android:name=".StudentActivity" />
@@ -39,18 +35,13 @@
         <activity android:name=".AddInstituteInfo" />
         <activity android:name=".InstituteInfo" />
         <activity android:name=".ProfInfo" />
-        <activity android:name=".CurrentLocation"/>
-        <activity android:name=".AddCourseDetails" ></activity>
+        <activity android:name=".CurrentLocation" />
+        <activity android:name=".AddCourseDetails" />
         <activity android:name=".AddStudentDetails" />
-        <!--
-        <activity android:name=".SearchGooglePlaces">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        !-->
+        <activity android:name=".AddStudentCourses" />
+        <activity android:name=".StudentInfo" />
+        <activity android:name=".MarkAttendance" />
+        <activity android:name=".FaceVerificationActivity"></activity>
     </application>
 
 </manifest>
