@@ -125,7 +125,7 @@ class CategorySelectionActivity : AppCompatActivity() {
 
             if (categoryName[position]=="PROFESSOR"){
                 var providers = Arrays.asList(
-                        AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
+                        AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build())
 
                 myView.tvCategoryName.setOnClickListener {
                     var editor=prefs!!.edit()
@@ -153,7 +153,7 @@ class CategorySelectionActivity : AppCompatActivity() {
 
             if (categoryName[position]=="STUDENT"){
                 var providers = Arrays.asList(
-                        AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
+                        AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build())
 
                 myView.tvCategoryName.setOnClickListener {
                     var editor=prefs!!.edit()
