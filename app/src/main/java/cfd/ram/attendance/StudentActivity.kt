@@ -54,7 +54,7 @@ class StudentActivity : AppCompatActivity() {
         }
 
         ivStudentInfo.setOnClickListener {
-            if (studentName=="" && studentRoll==""){
+            if (studentName=="" || studentName==null && studentRoll=="" || studentRoll==null){
                 var intent=Intent(this,AddStudentDetails::class.java)
                 startActivity(intent)
             }else{
@@ -64,7 +64,7 @@ class StudentActivity : AppCompatActivity() {
                 intent.putExtra("Roll",studentRoll)
                 intent.putExtra("DOB",studentDOB)
                 intent.putExtra("Year",studentYear)
-
+                startActivity(intent)
             }
 
         }
@@ -123,17 +123,20 @@ class StudentActivity : AppCompatActivity() {
                         }
 
                         override fun onDataChange(p0: DataSnapshot?) {
-                            var td=p0!!.value as HashMap<String,Any>
+                            if (p0!!.value!=null){
+                                var td=p0!!.value as HashMap<String,Any>
 
-                            courseList.clear()
+                                courseList.clear()
 
-                            for (key in td.keys){
-                                var courseDetails=td[key] as HashMap<String,Any>
+                                for (key in td.keys){
+                                    var courseDetails=td[key] as HashMap<String,Any>
 
-                                courseList.add(Course(courseDetails["courseCode"] as String,courseDetails["courseName"] as String))
+                                    courseList.add(Course(courseDetails["courseCode"] as String,courseDetails["courseName"] as String))
+                                }
+
+                                adapter!!.notifyDataSetChanged()
                             }
 
-                            adapter!!.notifyDataSetChanged()
                         }
 
                     })

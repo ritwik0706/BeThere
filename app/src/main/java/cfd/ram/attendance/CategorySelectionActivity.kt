@@ -230,9 +230,6 @@ class CategorySelectionActivity : AppCompatActivity() {
         if (myDots.isNotEmpty()){
             myDots[position].setTextColor(resources.getColor(R.color.white))
         }
-
-
-
     }
 
 

@@ -30,7 +30,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Student Name"
-                android:textColor="@color/White"
+                android:textColor="@color/Cyan"
                 android:textSize="30sp" />
 
         </LinearLayout>
@@ -49,7 +49,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Enrollment No."
-                android:textColor="@color/DarkBlue"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <TextView
@@ -77,7 +77,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Year   "
-                android:textColor="@color/DarkBlue"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <TextView
@@ -105,7 +105,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="DOB   "
-                android:textColor="@color/DarkBlue"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <TextView

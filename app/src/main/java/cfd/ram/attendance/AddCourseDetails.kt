@@ -49,7 +49,7 @@ class AddCourseDetails : AppCompatActivity() {
 
                     override fun onDataChange(p0: DataSnapshot?) {
                         if (p0!!.value!=null){
-                            var td=p0!!.value as HashMap<String,Any>
+                            var td=p0.value as HashMap<String,Any>
 
                             for (key in td.keys){
                                 var prof=td[key] as HashMap<String,Any>
@@ -96,7 +96,7 @@ class AddCourseDetails : AppCompatActivity() {
         if (requestCode==1){
             if (resultCode== Activity.RESULT_OK){
                 longi=data!!.getStringExtra("Longi")
-                lat=data!!.getStringExtra("Lati")
+                lat=data.getStringExtra("Lati")
             }
         }
     }
